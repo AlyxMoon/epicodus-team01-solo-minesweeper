@@ -66,4 +66,35 @@ describe('class Game', () => {
       ])
     })
   })
+
+  describe('method getNeighboringCells()', () => {
+    const game = new Game({
+      colCount: 4,
+      rowCount: 4,
+      board: [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16],
+      ],
+    })
+
+    it('should return all 8 adjacent cells', () => {
+      expect(game.getNeighboringCells(1, 2)).toEqual([
+        2, 3, 4, 6, 8, 10, 11, 12,
+      ])
+    })
+
+    it('should not return out of bounds to the top or left', () => {
+      expect(game.getNeighboringCells(0, 0)).toEqual([
+        2, 5, 6,
+      ])
+    })
+
+    it('should not return out of bounds to the bottom or right', () => {
+      expect(game.getNeighboringCells(3, 3)).toEqual([
+        11, 12, 15,
+      ])
+    })
+  })
 })
