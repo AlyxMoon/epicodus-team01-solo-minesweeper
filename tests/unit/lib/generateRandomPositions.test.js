@@ -6,7 +6,7 @@ describe('function generateRandomPositions()', () => {
   })
 
   it('should return the correct amount of entries in the correct format', () => {
-    const result = generateRandomPositions(10, 1, 10)
+    const result = generateRandomPositions(10, [1, 10], [1, 10])
 
     expect(result.length).toEqual(10)
     for (const item of result) {
@@ -17,7 +17,7 @@ describe('function generateRandomPositions()', () => {
   })
 
   it('should have each entry be within the min/max range (inclusive)', () => {
-    const result = generateRandomPositions(10, 1, 8)
+    const result = generateRandomPositions(10, [1, 8], [1, 8])
     for (const item of result) {
       expect(item[0]).toBeGreaterThanOrEqual(1)
       expect(item[0]).toBeLessThanOrEqual(8)
@@ -26,8 +26,18 @@ describe('function generateRandomPositions()', () => {
     }
   })
 
+  it('should have each entry be within the min/max range (inclusive) for different row/columns values', () => {
+    const result = generateRandomPositions(10, [1, 5], [10, 17])
+    for (const item of result) {
+      expect(item[0]).toBeGreaterThanOrEqual(1)
+      expect(item[0]).toBeLessThanOrEqual(5)
+      expect(item[1]).toBeGreaterThanOrEqual(10)
+      expect(item[1]).toBeLessThanOrEqual(17)
+    }
+  })
+
   it('should not return any duplicate entries', () => {
-    const result = generateRandomPositions(9, 1, 3)
+    const result = generateRandomPositions(9, [1, 3], [1, 3])
 
     for (let i = 0; i < result.length; i++) {
       for (let j = 0; j < result.length; j++) {
@@ -40,7 +50,7 @@ describe('function generateRandomPositions()', () => {
 
   it('should throw an error if it cannot generate enough items to meet count', () => {
     expect(() => {
-      generateRandomPositions(10, 1, 3)
+      generateRandomPositions(10, [1, 3], [1, 3])
     }).toThrow()
   })
 })
