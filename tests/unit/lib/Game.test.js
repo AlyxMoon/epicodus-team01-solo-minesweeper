@@ -26,8 +26,8 @@ describe('class Game', () => {
 
     expect(game).toEqual({
       board: [
-        [mine(), cell(), cell()],
-        [cell(), cell(), cell()],
+        [mine(), cell(1), cell()],
+        [cell(1), cell(1), cell()],
       ],
       rowCount: 2,
       colCount: 3,
@@ -61,8 +61,8 @@ describe('class Game', () => {
 
       const board = game.generateBoard(2, 3, [[0, 0], [1, 2]])
       expect(board).toEqual([
-        [mine(), cell(), cell()],
-        [cell(), cell(), mine()],
+        [mine(), cell(1), cell()],
+        [cell(1), cell(1), mine()],
       ])
     })
   })
@@ -95,6 +95,31 @@ describe('class Game', () => {
       expect(game.getNeighboringCells(3, 3)).toEqual([
         11, 12, 15,
       ])
+    })
+  })
+
+  describe('method getCountAdjacentBombs()', () => {
+    const game = new Game({
+      colCount: 3,
+      rowCount: 3,
+      board: [
+        [cell(), cell(), mine(), cell()],
+        [mine(), cell(), cell(), cell()],
+        [mine(), cell(), cell(), cell()],
+        [mine(), mine(), mine(), cell()],
+      ],
+    })
+
+    it('should give a count of adjacent bombs', () => {
+      expect(game.getCountOfAdjacentBombs(1, 1)).toEqual(3)
+      expect(game.getCountOfAdjacentBombs(2, 2)).toEqual(2)
+    })
+
+    it('should give correct count from the corners', () => {
+      expect(game.getCountOfAdjacentBombs(0, 0)).toEqual(1)
+      expect(game.getCountOfAdjacentBombs(0, 3)).toEqual(1)
+      expect(game.getCountOfAdjacentBombs(3, 0)).toEqual(2)
+      expect(game.getCountOfAdjacentBombs(3, 3)).toEqual(1)
     })
   })
 })

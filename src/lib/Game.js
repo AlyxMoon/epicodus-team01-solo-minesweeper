@@ -16,7 +16,7 @@ export default class Game {
   }
 
   generateBoard (row = 0, col = 0, minePositions = []) {
-    return [...Array(row)].map((_, r) => {
+    const board = [...Array(row)].map((_, r) => {
       return [...Array(col)].map((_, c) => {
         const isMine = minePositions.some(position => {
           return position[0] === r && position[1] === c
@@ -25,24 +25,39 @@ export default class Game {
         return new Cell({ isMine })
       })
     })
+
+    for (let r = 0; r < row; r++) {
+      for (let c = 0; c < col; c++) {
+        board[r][c].adjacentMineCount = this.getCountOfAdjacentBombs(r, c, board)
+      }
+    }
+
+    this.board = board
+    return board
   }
 
-  getNeighboringCells (row, col) {
+  getNeighboringCells (row, col, board = this.board) {
     const neighbors = []
 
     for (let x = row - 1; x <= row + 1; x++) {
       for (let y = col - 1; y <= col + 1; y++) {
         if (
           x < 0 || y < 0 ||
-          x >= this.board.length ||
-          y >= this.board.length ||
+          x >= board.length ||
+          y >= board.length ||
           (x === row && y === col)
         ) continue
 
-        neighbors.push(this.board[x][y])
+        neighbors.push(board[x][y])
       }
     }
 
     return neighbors
+  }
+
+  getCountOfAdjacentBombs (row, col, board = this.board) {
+    const neighbors = this.getNeighboringCells(row, col, board)
+
+    return neighbors.filter(cell => cell.isMine).length
   }
 }
