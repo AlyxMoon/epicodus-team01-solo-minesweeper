@@ -10,9 +10,9 @@
   display: grid;
   grid-template-columns: repeat(1, var(--cell-size));
   grid-auto-rows: var(--cell-size);
-  gap: 3px;
+  gap: 2px;
 
-  background-color: #000000;
+  background-color: #111111;
 
   .cell {
     height: 100%;
@@ -23,5 +23,13 @@
     justify-content: center;
 
     background-color: #CCCCCC;
+    border: 2px solid #AAAAAA;
+    box-sizing: border-box;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+    user-select: none;
   }
 }

@@ -7,16 +7,58 @@ import Game from '@/lib/Game'
 const drawGameBoard = (game) => {
   const elBoard = document.querySelector('#game-board')
   let content = ''
+  let index = 0
 
   for (const row of game.board) {
-    for (const col of row) {
-      const cellContent = col.isMine ? '.' : col.adjacentMineCount
-      content += `<div class="cell">${cellContent}</div>`
+    for (const cell of row) {
+      let cellContent = ''
+      if (cell.hasFlag) {
+        cellContent = '!'
+      } else if (cell.hasQuestionMark) {
+        cellContent = '?'
+      } else if (cell.isVisible) {
+        cellContent = cell.isMine ? '.' : cell.adjacentMineCount
+      }
+
+      content += `
+        <div class="cell" data-index="${index++}">
+          ${cellContent}
+        </div>
+      `
     }
   }
 
   elBoard.style.gridTemplateColumns = `repeat(${game.colCount}, var(--cell-size))`
   elBoard.innerHTML = content
+  addEventListeners(game)
+}
+
+const addEventListeners = (game) => {
+  const handleClick = (event) => {
+    const index = event.currentTarget.dataset.index
+    const [row, col] = game.getRowAndColFromIndex(index)
+
+    console.log('you clicked on this:', [row, col])
+    game.selectCell(row, col)
+    drawGameBoard(game)
+  }
+
+  const handleRightClick = (event) => {
+    event.preventDefault()
+
+    const index = event.currentTarget.dataset.index
+    const [row, col] = game.getRowAndColFromIndex(index)
+
+    console.log('you clicked on this:', [row, col])
+    game.selectCell(row, col, 'mark')
+    drawGameBoard(game)
+  }
+
+  const elCells = document.querySelectorAll('#game-board .cell')
+  for (const cell of elCells) {
+    cell.addEventListener('click', handleClick)
+    cell.addEventListener('contextmenu', handleRightClick)
+  }
 }
 
 const main = async () => {

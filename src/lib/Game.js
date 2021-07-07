@@ -67,4 +67,38 @@ export default class Game {
 
     return [row, col]
   }
+
+  selectCell (row, col, type = 'select') {
+    const cell = this.board[row][col]
+
+    if (type === 'select') {
+      if (cell.isVisible || cell.hasFlag) return
+      cell.isVisible = true
+      cell.hasQuestionMark = false
+
+      if (cell.isMine) return this.gameLost()
+    }
+
+    if (type === 'mark') {
+      if (cell.isVisible) return
+
+      if (cell.hasFlag) {
+        cell.hasFlag = false
+        cell.hasQuestionMark = true
+      } else if (cell.hasQuestionMark) {
+        cell.hasFlag = false
+        cell.hasQuestionMark = false
+      } else {
+        cell.hasFlag = true
+      }
+    }
+  }
+
+  gameWon () {
+    console.log('YOU HAVE WON')
+  }
+
+  gameLost () {
+    console.log('YOU HAVE LOST')
+  }
 }
