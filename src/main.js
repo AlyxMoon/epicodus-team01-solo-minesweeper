@@ -37,6 +37,10 @@ const drawGameBoard = (game) => {
 
   elBoard.style.gridTemplateColumns = `repeat(${game.colCount}, var(--cell-size))`
   elBoard.innerHTML = content
+
+  document.querySelector('#output-cells-remaining').innerText = game.cellsRemaining
+  document.querySelector('#output-mines-remaining').innerText = game.minesRemaining
+
   addEventListeners(game)
 }
 

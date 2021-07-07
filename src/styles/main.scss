@@ -9,6 +9,7 @@ header, main {
 
 main {
   min-height: 50vh;
+  border-top: 1px solid black;
 }
 
 footer {
@@ -49,12 +50,27 @@ a {
   }
 }
 
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px;
+
+  dt {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  dt, dd {
+    margin: 0;
+  }
+}
+
 
 #game-board {
   --cell-size: 24px;
 
   width: fit-content;
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 3px;
 
   display: grid;

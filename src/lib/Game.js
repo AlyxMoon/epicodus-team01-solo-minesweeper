@@ -15,6 +15,37 @@ export default class Game {
     this.mineCount = mineCount
   }
 
+  get minesRemaining () {
+    if (!this.board || !this.board.length) return 0
+
+    let count = this.mineCount
+    for (const row of this.board) {
+      for (const cell of row) {
+        if (cell.hasFlag) count--
+      }
+    }
+
+    return count
+  }
+
+  get cellsRemaining () {
+    if (!this.board || !this.board.length) return 0
+
+    let count = (this.colCount * this.rowCount) - this.mineCount
+
+    for (const row of this.board) {
+      for (const cell of row) {
+        if (
+          !cell.hasFlag &&
+          !cell.hasQuestionMark &&
+          cell.isVisible
+        ) count--
+      }
+    }
+
+    return count
+  }
+
   generateBoard (row = 0, col = 0, minePositions = []) {
     const board = [...Array(row)].map((_, r) => {
       return [...Array(col)].map((_, c) => {
@@ -103,6 +134,10 @@ export default class Game {
       } else {
         cell.hasFlag = true
       }
+    }
+
+    if (!this.cellsRemaining && !this.minesRemaining) {
+      this.gameWon()
     }
   }
 
