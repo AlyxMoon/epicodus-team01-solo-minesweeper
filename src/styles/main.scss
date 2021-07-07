@@ -1,10 +1,60 @@
+body * {
+  box-sizing: border-box;
+}
+
+header, main {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+main {
+  min-height: 50vh;
+}
+
+footer {
+  width: 100%;
+  padding: 20px 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+  background: linear-gradient(30deg, #111111, #091823);
+  border-top: 3px solid #3FB0AC;
+
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+  
+    gap: 10px;
+  }
+}
+
+a {
+  color: #3FB0AC;
+  text-decoration: none;
+
+  transition: all 0.3s;
+
+  &:hover, &:focus {
+    color: #47DAD5;
+  }
+}
 
 
 #game-board {
   --cell-size: 24px;
 
   width: fit-content;
-  margin: 50px auto;
+  margin-top: 50px;
   padding: 3px;
 
   display: grid;

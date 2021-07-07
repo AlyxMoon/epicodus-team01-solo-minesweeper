@@ -21,7 +21,7 @@ const drawGameBoard = (game) => {
         cellContent = '?'
         cellClasses += ' question'
       } else if (cell.isVisible) {
-        cellContent = cell.isMine ? '.' : cell.adjacentMineCount
+        cellContent = cell.isMine ? '+' : cell.adjacentMineCount
       }
 
       content += `
@@ -69,7 +69,7 @@ const addEventListeners = (game) => {
 }
 
 const main = async () => {
-  const game = new Game({ colCount: 10, rowCount: 10, mineCount: 20 })
+  const game = new Game({ colCount: 10, rowCount: 10, mineCount: 15 })
 
   drawGameBoard(game)
 }
