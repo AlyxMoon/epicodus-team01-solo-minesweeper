@@ -36,7 +36,7 @@ export default class Game {
     return board
   }
 
-  getNeighboringCells (row, col, board = this.board) {
+  getAdjacentPositions (row, col, board = this.board) {
     const neighbors = []
 
     for (let x = row - 1; x <= row + 1; x++) {
@@ -48,11 +48,18 @@ export default class Game {
           (x === row && y === col)
         ) continue
 
-        neighbors.push(board[x][y])
+        neighbors.push([x, y])
       }
     }
 
     return neighbors
+  }
+
+  getNeighboringCells (row, col, board = this.board) {
+    return this.getAdjacentPositions(row, col, board)
+      .map(position => {
+        return board[position[0]][position[1]]
+      })
   }
 
   getCountOfAdjacentBombs (row, col, board = this.board) {
@@ -73,6 +80,7 @@ export default class Game {
 
     if (type === 'select') {
       if (cell.isVisible || cell.hasFlag) return
+      this.walkAndSelectAdjacentCells(row, col)
       cell.isVisible = true
       cell.hasQuestionMark = false
 
@@ -92,6 +100,25 @@ export default class Game {
         cell.hasFlag = true
       }
     }
+  }
+
+  walkAndSelectAdjacentCells (row, col) {
+    const cell = this.board[row][col]
+
+    if (
+      cell.isVisible ||
+      cell.adjacentMineCount ||
+      cell.isMine ||
+      cell.hasFlag ||
+      cell.hasQuestionMark
+    ) return
+    cell.isVisible = true
+    cell.hasQuestionMark = false
+
+    const neighbors = this.getAdjacentPositions(row, col)
+    neighbors.forEach(([x, y]) => {
+      this.walkAndSelectAdjacentCells(x, y)
+    })
   }
 
   gameWon () {
