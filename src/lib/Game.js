@@ -125,10 +125,26 @@ export default class Game {
   }
 
   gameWon () {
-    console.log('YOU HAVE WON')
+    alert('YOU HAVE WON')
+
+    const positions = generateRandomPositions(this.mineCount, [0, this.rowCount - 1], [0, this.colCount - 1])
+
+    this.generateBoard(
+      this.rowCount,
+      this.colCount,
+      positions,
+    )
   }
 
   gameLost () {
-    console.log('YOU HAVE LOST')
+    alert('YOU HAVE LOST')
+
+    const positions = generateRandomPositions(this.mineCount, [0, this.rowCount - 1], [0, this.colCount - 1])
+
+    this.generateBoard(
+      this.rowCount,
+      this.colCount,
+      positions,
+    )
   }
 }

@@ -31,5 +31,13 @@
 
     cursor: pointer;
     user-select: none;
+
+    &.flag {
+      color: red;
+    }
+
+    &.question {
+      color: blue;
+    }
   }
 }

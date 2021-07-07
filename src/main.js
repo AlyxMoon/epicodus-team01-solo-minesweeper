@@ -12,16 +12,23 @@ const drawGameBoard = (game) => {
   for (const row of game.board) {
     for (const cell of row) {
       let cellContent = ''
+      let cellClasses = 'cell'
+
       if (cell.hasFlag) {
         cellContent = '!'
+        cellClasses += ' flag'
       } else if (cell.hasQuestionMark) {
         cellContent = '?'
+        cellClasses += ' question'
       } else if (cell.isVisible) {
         cellContent = cell.isMine ? '.' : cell.adjacentMineCount
       }
 
       content += `
-        <div class="cell" data-index="${index++}">
+        <div 
+          class="${cellClasses}" 
+          data-index="${index++}"
+        >
           ${cellContent}
         </div>
       `
