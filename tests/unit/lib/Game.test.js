@@ -122,4 +122,22 @@ describe('class Game', () => {
       expect(game.getCountOfAdjacentBombs(3, 3)).toEqual(1)
     })
   })
+
+  describe('method getRowAndColFromIndex()', () => {
+    it('should give the correct row and cell', () => {
+      const game = new Game({
+        colCount: 3,
+        rowCount: 4,
+        board: [
+          [cell(), cell(), cell()],
+          [cell(), cell(), cell()],
+          [cell(), cell(), cell()],
+          [cell(), cell(), cell()],
+        ],
+      })
+
+      expect(game.getRowAndColFromIndex(2)).toEqual([0, 2])
+      expect(game.getRowAndColFromIndex(10)).toEqual([3, 1])
+    })
+  })
 })

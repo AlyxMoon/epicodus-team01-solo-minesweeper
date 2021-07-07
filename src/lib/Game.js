@@ -60,4 +60,11 @@ export default class Game {
 
     return neighbors.filter(cell => cell.isMine).length
   }
+
+  getRowAndColFromIndex (index = 0) {
+    const row = Math.floor(index / this.colCount)
+    const col = index - (row * this.colCount)
+
+    return [row, col]
+  }
 }
