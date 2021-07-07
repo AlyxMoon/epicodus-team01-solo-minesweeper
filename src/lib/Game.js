@@ -80,7 +80,11 @@ export default class Game {
 
     if (type === 'select') {
       if (cell.isVisible || cell.hasFlag) return
-      this.walkAndSelectAdjacentCells(row, col)
+
+      if (!cell.adjacentMineCount) {
+        this.walkAndSelectAdjacentCells(row, col)
+      }
+
       cell.isVisible = true
       cell.hasQuestionMark = false
 
@@ -103,22 +107,21 @@ export default class Game {
   }
 
   walkAndSelectAdjacentCells (row, col) {
-    const cell = this.board[row][col]
+    this.getAdjacentPositions(row, col)
+      .forEach(([x, y]) => {
+        const cell = this.board[x][y]
+        if (
+          cell.isMine ||
+          cell.hasFlag ||
+          cell.isVisible
+        ) return
 
-    if (
-      cell.isVisible ||
-      cell.adjacentMineCount ||
-      cell.isMine ||
-      cell.hasFlag ||
-      cell.hasQuestionMark
-    ) return
-    cell.isVisible = true
-    cell.hasQuestionMark = false
+        cell.isVisible = true
+        cell.hasQuestionMark = false
 
-    const neighbors = this.getAdjacentPositions(row, col)
-    neighbors.forEach(([x, y]) => {
-      this.walkAndSelectAdjacentCells(x, y)
-    })
+        if (cell.adjacentMineCount) return
+        this.walkAndSelectAdjacentCells(x, y)
+      })
   }
 
   gameWon () {
