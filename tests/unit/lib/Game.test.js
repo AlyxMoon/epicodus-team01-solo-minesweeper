@@ -13,6 +13,8 @@ describe('class Game', () => {
       mineCount: 0,
       colCount: 0,
       rowCount: 0,
+      timesLost: 0,
+      timesWon: 0,
     })
   })
 
@@ -32,6 +34,8 @@ describe('class Game', () => {
       rowCount: 2,
       colCount: 3,
       mineCount: 1,
+      timesLost: 0,
+      timesWon: 0,
     })
   })
 

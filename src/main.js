@@ -40,6 +40,8 @@ const drawGameBoard = (game) => {
 
   document.querySelector('#output-cells-remaining').innerText = game.cellsRemaining
   document.querySelector('#output-mines-remaining').innerText = game.minesRemaining
+  document.querySelector('#output-wins').innerText = game.timesWon
+  document.querySelector('#output-losses').innerText = game.timesLost
 
   addEventListeners(game)
 }

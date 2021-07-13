@@ -13,6 +13,9 @@ export default class Game {
     this.colCount = colCount
     this.rowCount = rowCount
     this.mineCount = mineCount
+
+    this.timesWon = 0
+    this.timesLost = 0
   }
 
   get minesRemaining () {
@@ -161,6 +164,7 @@ export default class Game {
 
   gameWon () {
     alert('YOU HAVE WON')
+    this.timesWon++
 
     const positions = generateRandomPositions(this.mineCount, [0, this.rowCount - 1], [0, this.colCount - 1])
 
@@ -173,6 +177,7 @@ export default class Game {
 
   gameLost () {
     alert('YOU HAVE LOST')
+    this.timesLost++
 
     const positions = generateRandomPositions(this.mineCount, [0, this.rowCount - 1], [0, this.colCount - 1])
 
